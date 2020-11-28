@@ -1,7 +1,61 @@
-<!DOCTYPE html>
-<html>
-    <body>
+<!doctype html>
+<html amp lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>PollenParty</title>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js"></script>
+    <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+    <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
+    <link rel="canonical" href=".">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <style amp-custom>
+        html, body {
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        h1 {
+          font-size: 4rem;
+        }
+        input[type=submit] {
+          background-color: black;
+          border: none;
+          color: white;
+          font-size: 1.25rem;
+          padding: 1rem 0rem;
+          text-decoration: none;
+          margin: 0;
+          cursor: pointer;
+          width: 20%;
+          box-sizing: border-box;
+        }
+        input[type=text] {
+          background-color: aliceblue;
+          border: none;
+          color: #444;
+          font-size: 1.25rem;
+          line-height: 2.25rem;
+          margin: 0;
+          overflow: hidden;
+          padding: 0.5rem 1rem;
+          width: 80%;
+          box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <amp-state id="data">
+        <script type="application/json">
+            {
+                "coordinates": ""
+            }
+        </script>
+    </amp-state>
+    <form action-xhr="/api/geocode" method="get" on="submit-success: AMP.setState({ data: event.response })">
         <h1>PollenParty</h1>
-        <p>Hello world.</p>
-    </body>
+        <input type="text" placeholder="Enter Address" name="address"
+        /><input type="submit" value="Submit"/>
+    </form>
+    <p [text]="data.coordinates"></p>
+</body>
 </html>
