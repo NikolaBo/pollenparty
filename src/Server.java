@@ -8,7 +8,7 @@ public class Server {
     // Port number used to connect to this server
     private static final int PORT = Integer.parseInt(System.getenv().getOrDefault("PORT", "8000"));
     // JSON endpoint structure
-    private static final String QUERY_TEMPLATE = "{\"coordinates\":\"%s\"}";
+    private static final String QUERY_TEMPLATE = "{\"test\":\"%s\"}";
     // private static final String QUERY_TEMPLATE = "{\"items\":[%s],\"votes\":\"%s\"}";
 
     public static void main(String[] args) throws IOException {
@@ -18,8 +18,8 @@ public class Server {
             send(t, "text/html; charset=utf-8", html);
         });
         server.createContext("/api/geocode", (HttpExchange t) -> {
-            String address = parse("address", t.getRequestURI().getQuery().split("&"));
-            System.out.println("Address received: " + address);
+            String zip = parse("zip", t.getRequestURI().getQuery().split("&"));
+            System.out.println("ZIP received: " + zip);
             send(t, "application/json", String.format(QUERY_TEMPLATE, "hello world"));
         });
         server.setExecutor(null);

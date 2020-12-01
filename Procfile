@@ -1,0 +1,1 @@
+web: javac src/Server.java && java -classpath src/ Server

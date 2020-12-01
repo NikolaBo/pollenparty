@@ -47,15 +47,15 @@
     <amp-state id="data">
         <script type="application/json">
             {
-                "coordinates": ""
+                "test": ""
             }
         </script>
     </amp-state>
     <form action-xhr="/api/geocode" method="get" on="submit-success: AMP.setState({ data: event.response })">
         <h1>PollenParty</h1>
-        <input type="text" placeholder="Enter Address" name="address"
+        <input type="text" placeholder="Enter ZIP Code" name="zip"
         /><input type="submit" value="Submit"/>
     </form>
-    <p [text]="data.coordinates"></p>
+    <p [text]="data.test"></p>
 </body>
 </html>
