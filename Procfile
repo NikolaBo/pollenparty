@@ -1,1 +1,1 @@
-web: javac src/Server.java && java -classpath src/ Server
+web: javac src/Server.java && cd src && java Server
