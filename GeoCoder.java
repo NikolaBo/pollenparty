@@ -29,12 +29,12 @@ public class GeoCoder {
         String[] wordsOnCurrentLine;
         while (currentLine != null) {
             wordsOnCurrentLine = currentLine.split("\t");
-            if(!statesToRegions.containsKey(wordsOnCurrentLine[0])) {
+            if(!statesToRegions.containsKey(wordsOnCurrentLine[0].trim())) {
                 Set<String> regions = new HashSet<>();
-                regions.add(wordsOnCurrentLine[1]);
-                statesToRegions.put(wordsOnCurrentLine[0], regions);
+                regions.add(wordsOnCurrentLine[1].trim());
+                statesToRegions.put(wordsOnCurrentLine[0].trim(), regions);
             } else {
-                statesToRegions.get(wordsOnCurrentLine[0]).add(wordsOnCurrentLine[1]);
+                statesToRegions.get(wordsOnCurrentLine[0].trim()).add(wordsOnCurrentLine[1].trim());
             }
             currentLine = reader.readLine();
         }
@@ -52,12 +52,12 @@ public class GeoCoder {
         String[] wordsOnCurrentLine;
         while (currentLine != null) {
             wordsOnCurrentLine = currentLine.split("\t");
-            if(!regionsToFlowers.containsKey(wordsOnCurrentLine[0])) {
+            if(!regionsToFlowers.containsKey(wordsOnCurrentLine[0].trim())) {
                 Set<String> flowers = new HashSet<>();
-                flowers.add(wordsOnCurrentLine[1]);
-                regionsToFlowers.put(wordsOnCurrentLine[0], flowers);
+                flowers.add(wordsOnCurrentLine[1].trim());
+                regionsToFlowers.put(wordsOnCurrentLine[0].trim(), flowers);
             } else {
-                regionsToFlowers.get(wordsOnCurrentLine[0]).add(wordsOnCurrentLine[1]);
+                regionsToFlowers.get(wordsOnCurrentLine[0].trim()).add(wordsOnCurrentLine[1].trim());
             }
             currentLine = reader.readLine();
         }
@@ -75,12 +75,12 @@ public class GeoCoder {
         String[] wordsOnCurrentLine;
         while (currentLine != null) {
             wordsOnCurrentLine = currentLine.split("\t");
-            if(!statesToZipCodes.containsKey(wordsOnCurrentLine[0])) {
+            if(!statesToZipCodes.containsKey(wordsOnCurrentLine[0].trim())) {
                 Map<Integer, Integer> states = new HashMap<>();
-                states.put(Integer.parseInt(wordsOnCurrentLine[1]), Integer.parseInt(wordsOnCurrentLine[2]));
-                statesToZipCodes.put(wordsOnCurrentLine[0], states);
+                states.put(Integer.parseInt(wordsOnCurrentLine[1].trim()), Integer.parseInt(wordsOnCurrentLine[2].trim()));
+                statesToZipCodes.put(wordsOnCurrentLine[0].trim(), states);
             } else {
-                statesToZipCodes.get(wordsOnCurrentLine[0]).put(Integer.parseInt(wordsOnCurrentLine[1]), Integer.parseInt(wordsOnCurrentLine[2]));
+                statesToZipCodes.get(wordsOnCurrentLine[0].trim()).put(Integer.parseInt(wordsOnCurrentLine[1].trim()), Integer.parseInt(wordsOnCurrentLine[2].trim()));
             }
             currentLine = reader.readLine();
         }
@@ -98,12 +98,12 @@ public class GeoCoder {
         String[] wordsOnCurrentLine;
         while (currentLine != null) {
             wordsOnCurrentLine = currentLine.split("\t");
-            if(!regionsToZipCodes.containsKey(wordsOnCurrentLine[0])) {
+            if(!regionsToZipCodes.containsKey(wordsOnCurrentLine[0].trim())) {
                 Set<Integer> zipCodes = new HashSet<>();
-                zipCodes.add(Integer.parseInt(wordsOnCurrentLine[1]));
-                regionsToZipCodes.put(wordsOnCurrentLine[0], zipCodes);
+                zipCodes.add(Integer.parseInt(wordsOnCurrentLine[1].trim()));
+                regionsToZipCodes.put(wordsOnCurrentLine[0].trim(), zipCodes);
             } else {
-                regionsToZipCodes.get(wordsOnCurrentLine[0]).add(Integer.parseInt(wordsOnCurrentLine[1]));
+                regionsToZipCodes.get(wordsOnCurrentLine[0].trim()).add(Integer.parseInt(wordsOnCurrentLine[1].trim()));
             }
             currentLine = reader.readLine();
         }
