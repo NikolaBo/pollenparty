@@ -1,1 +1,1 @@
-web: javac Server.java && java Server
+web: javac Server.java && java Server data/states-regions.tsv data/states-zipcodes.tsv data/regions-zipcodes.tsv data/regions-flowers.tsv data/regions-descriptions.tsv data/flowers-descriptions.tsv

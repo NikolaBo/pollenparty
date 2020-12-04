@@ -1,27 +1,25 @@
-package MyPackage;
-
 import java.util.*;
 import java.io.*;
 
 public class GeoCoder {
-    private String statesRegionsPath, statesZipCodesPath, regionsZipCodesPath, regionsFlowersPath, regionsDescriptionsPath, flowersDescriptionsPath;
-    private Map<String, Set<String>> statesRegions, regionsFlowers;
+    private String statesRegionsPath, statesZipCodesPath, regionsZipCodesPath, regionFlowersPath, regionDescriptionsPath, flowerDescriptionsPath;
+    private Map<String, Set<String>> statesRegions, regionFlowers;
     private Map<String, Map<Integer, Integer>> statesZipCodes;
     private Map<String, Set<Integer>> regionsZipCodes;
-    private Map<String, String> regionsDescriptions, flowersDescriptions;
-    public GeoCoder(String statesRegionsPath, String statesZipCodesPath, String regionsZipCodesPath, String regionsFlowersPath, String regionsDescriptionsPath, String flowersDescriptionsPath) throws IOException {
+    private Map<String, String> regionDescriptions, flowerDescriptions;
+    public GeoCoder(String statesRegionsPath, String statesZipCodesPath, String regionsZipCodesPath, String regionFlowersPath, String regionDescriptionsPath, String flowerDescriptionsPath) throws IOException {
         this.statesRegionsPath = statesRegionsPath;
         this.statesZipCodesPath = statesZipCodesPath;
         this.regionsZipCodesPath = regionsZipCodesPath;
-        this.regionsFlowersPath = regionsFlowersPath;
-        this.regionsDescriptionsPath = regionsDescriptionsPath;
-        this.flowersDescriptionsPath = flowersDescriptionsPath;
+        this.regionFlowersPath = regionFlowersPath;
+        this.regionDescriptionsPath = regionDescriptionsPath;
+        this.flowerDescriptionsPath = flowerDescriptionsPath;
         statesRegions = setStatesRegions(this.statesRegionsPath);
-        regionsFlowers = setRegionsFlowers(this.regionsFlowersPath);
+        regionFlowers = setregionFlowers(this.regionFlowersPath);
         statesZipCodes = setStatesZipCodes(this.statesZipCodesPath);
         regionsZipCodes = setRegionsZipCodes(this.regionsZipCodesPath);
-        regionsDescriptions = setRegionsDescriptions(this.regionsDescriptionsPath);
-        flowersDescriptions = setFlowersDescriptions(this.flowersDescriptionsPath);
+        regionDescriptions = setregionDescriptions(this.regionDescriptionsPath);
+        flowerDescriptions = setflowerDescriptions(this.flowerDescriptionsPath);
     }
 
     public Map<String, Set<String>> setStatesRegions(String filePath) throws IOException {
@@ -93,7 +91,7 @@ public class GeoCoder {
         return regionsToZipCodes;
     }
 
-    public Map<String, Set<String>> setRegionsFlowers(String filePath) throws IOException {
+    public Map<String, Set<String>> setregionFlowers(String filePath) throws IOException {
         if (filePath == null) {
             throw new NullPointerException("Invalid File Path");
         }
@@ -114,7 +112,7 @@ public class GeoCoder {
         return regionsToFlowers;
     }
 
-    public Map<String, String> setRegionsDescriptions(String filePath) throws IOException {
+    public Map<String, String> setregionDescriptions(String filePath) throws IOException {
         if (filePath == null) {
             throw new NullPointerException("Invalid File Path");
         }
@@ -131,7 +129,7 @@ public class GeoCoder {
         return regionsToDescriptions;
     }
 
-    public Map<String, String> setFlowersDescriptions(String filePath) throws IOException {
+    public Map<String, String> setflowerDescriptions(String filePath) throws IOException {
         if (filePath == null) {
             throw new NullPointerException("Invalid File Path");
         }
@@ -148,40 +146,34 @@ public class GeoCoder {
         return flowersToDescriptions;
     }
     public class Information {
-        private String region, regionsDescription;
-        private Map<String, String> flowersDescription;
-        private Set<String> flowers;
-        public Information(String region, String regionsDescription,  Set<String> flowers, Map<String, String> flowersDescription) {
+        private String region, regionDescription;
+        private Map<String, String> flowers;
+        public Information(String region, String regionDescription, Map<String, String> flowers) {
             this.region = region;
-            this.regionsDescription = regionsDescription;
+            this.regionDescription = regionDescription;
             this.flowers = flowers;
-            this.flowersDescription = flowersDescription;
         }
         public String toString() {
             String toReturn = "";
-            toReturn += this.region + ": " + this.regionsDescription;
-            for (String flower : flowers) {
+            toReturn += this.region + ": " + this.regionDescription;
+            for (String flower : flowers.keySet()) {
                 toReturn += "\n";
-                toReturn += flower + ": " + this.flowersDescription.get(flower);
+                toReturn += flower + ": " + this.flowers.get(flower);
             }
             return toReturn;
         }
         public String getRegion() {
             return this.region;
         }
-        public String getRegionsDescription() {
-            return this.regionsDescription;
+        public String getRegionDescription() {
+            return this.regionDescription;
         }
-        public Set<String> getAllFlowers() {
+        public Map<String, String> getFlowers() {
             return this.flowers;
         }
-        public Map<String, String> getAllFlowersDescriptions() {
-            return this.flowersDescription;
-        }
-
     }
 
-    public Information returnFlowers(String zipCode) {
+    public GeoCoder.Information returnFlowers(String zipCode) {
         int zipCodeInt = Integer.parseInt(zipCode);
         String myState = null;
         for (String state : this.statesZipCodes.keySet()) {
@@ -221,12 +213,17 @@ public class GeoCoder {
         } else {
             targetRegion = regions.get(0);
         }
-        Information correctFlowers = new Information(targetRegion, this.regionsDescriptions.get(targetRegion), this.regionsFlowers.get(targetRegion), this.flowersDescriptions);
+        Map<String, String> flowers = new HashMap<>();
+        for (String f : this.regionFlowers.get(targetRegion)) {
+            flowers.put(f, this.flowerDescriptions.get(f));
+            //System.out.println(this.flowerDescriptions.get(f));
+        }
+        Information correctFlowers = new Information(targetRegion, this.regionDescriptions.get(targetRegion), flowers);
         return correctFlowers;
     }
 
     public static void main (String[] args) throws IOException {
-        GeoCoder files = new GeoCoder("states-regions.tsv", "states-zip codes.tsv", "regions-zip codes.tsv", "regions-flowers.tsv", "regions-descriptions.tsv", "flowers-descriptions.tsv");
+        GeoCoder files = new GeoCoder("data/states-regions.tsv", "data/states-zipcodes.tsv", "data/regions-zipcodes.tsv", "data/regions-flowers.tsv", "data/regions-descriptions.tsv", "data/flowers-descriptions.tsv");
         Scanner in = new Scanner(System.in);
         System.out.println("Enter Zip Code (5 digits only): ");
         String zipCode = in.nextLine();
