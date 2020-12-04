@@ -17,6 +17,7 @@
         }
         h1 {
           font-size: 4rem;
+          margin-top: 0;
         }
         input[type=submit] {
           background-color: black;
@@ -57,6 +58,7 @@
             }
         </script>
     </amp-state>
+    <a href="/sim/index.html">Simulation</a>
     <form action-xhr="/api/geocode" method="get" on="submit-success: AMP.setState({ data: event.response })">
         <h1>PollenParty</h1>
         <input type="text" placeholder="Enter ZIP Code" name="zip"

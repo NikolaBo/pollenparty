@@ -32,6 +32,7 @@ public class Server {
             GeoCoder.Information info = geo.returnFlowers(zip);
             send(t, "application/json", String.format(QUERY_TEMPLATE, info.getRegion(), info.getRegionDescription(), json(info.getFlowers())));
         });
+        server.createContext("/sim", new FileHandler());
         server.setExecutor(null);
         server.start();
     }
@@ -74,5 +75,58 @@ public class Server {
                     .append('}');
         }
         return results.toString();
+    }
+
+    public static class FileHandler implements HttpHandler {
+        public void handle(HttpExchange t) throws IOException {
+            String root = "./";
+            URI uri = t.getRequestURI();
+            System.out.println("looking for: " + root + uri.getPath());
+            String path = uri.getPath();
+            File file = new File(root + path).getCanonicalFile();
+
+            if (!file.isFile()) {
+                // Object does not exist or is not a file: reject with 404 error.
+                String response = "404 (Not Found)\n";
+                t.sendResponseHeaders(404, response.length());
+                OutputStream os = t.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+            } else {
+                // Object exists and is a file: accept with response code 200.
+                String mime = "text/html";
+                if(getExt(path).equals("js")) mime = "application/javascript";
+                if(getExt(path).equals("css")) mime = "text/css";
+                if(getExt(path).equals("json")) mime = "application/json";
+                if(getExt(path).equals("png")) mime = "image/png";
+                if(getExt(path).equals("ico")) mime = "image/x-icon";
+                if(getExt(path).equals("unityweb")) mime = "application/octet-stream";
+
+                Headers h = t.getResponseHeaders();
+                h.set("Content-Type", mime);
+                t.sendResponseHeaders(200, 0);
+
+                OutputStream os = t.getResponseBody();
+                FileInputStream fs = new FileInputStream(file);
+                final byte[] buffer = new byte[0x10000];
+                int count = 0;
+                while ((count = fs.read(buffer)) >= 0) {
+                    os.write(buffer,0,count);
+                }
+                fs.close();
+                os.close();
+            }
+        }
+        private static String getExt(String path) {
+            int slashIndex = path.lastIndexOf('/');
+            String basename = (slashIndex < 0) ? path : path.substring(slashIndex + 1);
+
+            int dotIndex = basename.lastIndexOf('.');
+            if (dotIndex >= 0) {
+                return basename.substring(dotIndex + 1);
+            } else {
+                return "";
+            }
+        }
     }
 }
