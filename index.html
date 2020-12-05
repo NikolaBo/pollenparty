@@ -17,8 +17,8 @@
           background-color: black;
           border: none;
           color: white;
-          font-size: 1.25rem;
-          padding: 1rem 0rem;
+          font-size: 24px;
+          padding: 12px 0px;
           text-decoration: none;
           margin: 0;
           cursor: pointer;
@@ -29,11 +29,11 @@
           background-color: #f2f2f2;
           border: none;
           color: #444;
-          font-size: 1.25rem;
-          line-height: 2.5rem;
+          font-size: 24px;
+          line-height: 52px;
           margin: 0;
           overflow: hidden;
-          padding: 0.5rem 1rem;
+          padding: 0px 14px;
           width: 80%;
           box-sizing: border-box;
         }
@@ -53,20 +53,27 @@
         </script>
     </amp-state>
     <ul class="nav">
-        <li><a href="/"><h2>PollenParty</h2></a></li>
-        <li><a href="/simulation"><h2>Simulation</h2></a></li>
-    </ul>
+        <li><a href="/"><image src="/static/logo.png" width="250" style="padding-top:8.5px"></image></a></li>
+        <li><a href="/share"><h2>Share</h2></a></li>
+        <li style="float: right"><a href="/simulation"><h2>Design a Garden</h2></a></li>
+    </ul> 
+    <h3 style="margin: 14px 6px">Find pollinator friendly plants in your region:</h3>
     <form action-xhr="/api/geocode" method="get" on="submit-success: AMP.setState({ data: event.response })" autocomplete="off">
         <input type="text" placeholder="Enter ZIP Code" name="zip"
         /><input type="submit" value="Submit"/>
     </form>
-    <h2 [text]="data.region"></h2>
-    <p [text]="data.description"></p>
-    <amp-list [src]="data.items" id="items">
-        <template type="amp-mustache">
-            <h3>{{name}}</h3>
-            <p>{{description}}</p>
-        </template>
-    </amp-list>
+    <div class="response">
+      <h2 [text]="data.region" style="margin-bottom: 0"></h2>
+      <p [text]="data.description" style="margin-top: 0"></p>
+      <amp-list [src]="data.items" id="items">
+          <template type="amp-mustache">
+              <h3 style="margin-bottom: 0">{{name}}!</h3>
+              <p style="margin-top: 0">{{description}}</p>
+          </template>
+      </amp-list>
+    </div>
+    <div class="footer">
+      <p>The world's bee population is dangerously declining. The goal of PollenParty is to help create people design pollinator gardens, which provide critical habitats, shelter and food for pollinators.</p>
+    </div>
 </body>
 </html>
