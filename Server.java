@@ -26,6 +26,11 @@ public class Server {
             String html = Files.readString(Paths.get("share.html"));
             send(t, "text/html; charset=utf-8", html);
         });
+        server.createContext("/simulation", (HttpExchange t) -> {
+            String html = Files.readString(Paths.get(".//static/sim/index.html"));
+            System.out.println(html);
+            send(t, "text/html; charset=utf-8", html);
+        });
         server.createContext("/api/geocode", (HttpExchange t) -> {
             String zip = parse("zip", t.getRequestURI().getQuery().split("&"));
             System.out.println("ZIP received: " + zip);
