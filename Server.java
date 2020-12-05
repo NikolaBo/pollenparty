@@ -32,7 +32,7 @@ public class Server {
             GeoCoder.Information info = geo.returnFlowers(zip);
             send(t, "application/json", String.format(QUERY_TEMPLATE, info.getRegion(), info.getRegionDescription(), json(info.getFlowers())));
         });
-        server.createContext("/sim", new FileHandler());
+        server.createContext("/static", new FileHandler());
         server.setExecutor(null);
         server.start();
     }

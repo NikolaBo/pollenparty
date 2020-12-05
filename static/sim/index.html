@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | PollenPartySim</title>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+      UnityLoader.instantiate("unityContainer", "Build/pollenpartysim.json");
+    </script>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+      .container {
+        width: 960px;
+        margin: 20 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="nav">
+        <li><a href="/"><h2>PollenParty</h2></a></li>
+        <li><a href="/static/sim/index.html"><h2>Simulation</h2></a></li>
+    </ul>
+    <div class="container">
+      <div id="unityContainer" style="width: 960px; height: 600px; margin:0px auto"></div>
+    </div>
+  </body>
+</html>
