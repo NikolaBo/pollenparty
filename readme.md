@@ -1,6 +1,4 @@
 # Pollen Party
-To run the web app cd into the src directory and run:
+This is a final project for CSE 143 at the UW.
 
-`javac Server.java && java Server; rm *.class`
-
-View your web app at localhost:8000
+Pollen Party is an application that allows you to locate flowers in your local area that can be used in a pollinator garden, and helps you plan a pollinator garden. Save the bees!!
