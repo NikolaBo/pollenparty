@@ -52,3 +52,11 @@ li a:hover {
   width: 20%;
   box-sizing: border-box;
 }
+h2 {
+  margin-top: 15px;
+  font-size: 48px;
+}
+h3 {
+  margin-top: 10px;
+  font-size: 32px;
+}
