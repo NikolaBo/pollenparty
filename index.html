@@ -64,8 +64,9 @@
         /><input type="submit" value="Submit"/>
     </form>
     <div class="response">
-      <h2 [text]="data.region" style="margin-bottom: 0"></h2>
+      <h2 style="display: inline">Your Region: </h2><h2 [text]="data.region" style="margin-bottom: 0; display: inline"></h2>
       <p [text]="data.description" style="margin-top: 0"></p>
+      <h3 style="margin-bottom: 0">Flowers: </h3>
       <amp-list [src]="data.items" id="items">
           <template type="amp-mustache">
               <h3 style="margin-bottom: 0">{{name}}!</h3>
