@@ -28,7 +28,6 @@ public class Server {
         });
         server.createContext("/simulation", (HttpExchange t) -> {
             String html = Files.readString(Paths.get(".//static/sim/index.html"));
-            System.out.println(html);
             send(t, "text/html; charset=utf-8", html);
         });
         server.createContext("/api/geocode", (HttpExchange t) -> {
